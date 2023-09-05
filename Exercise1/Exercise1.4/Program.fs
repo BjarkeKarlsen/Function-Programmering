@@ -1,26 +1,7 @@
 ﻿module Program
+open DateUtils
 open System
-let isLeapYear(year: int): bool =
-    ((year % 100 <> 0 && year % 4 = 0 && year > 0) || year % 400 = 0)
 
-let daysToEndYear(year: int): int =
-    (year*365 + (1 * (abs(year - 1972) /4)%1))
-    
-let isJanuary(m : int, y : int): int =
-    if (m = 1) then
-        0
-    else if (isLeapYear(y) && m > 1) then
-        1
-    else
-        0
-
-let dayToEndMonth(monthYear : int * int) : int = 
-    let (month, _) = monthYear
-    let c = isJanuary(monthYear)
-    
-    ((367*month+5)/12)-c  
-
-        
 [<EntryPoint>]
 let main argv =
     printfn "Enter a month:"
@@ -33,7 +14,7 @@ let main argv =
     | true, month ->
         match Int32.TryParse(input) with
         | true, year ->
-            let isLeap = isLeapYear year
+            let isLeap = isLeap year
             let dayToEndMonth = dayToEndMonth (month, year) 
             printfn "Is leap year: %b" isLeap
             printfn "The month and year: %d" dayToEndMonth
