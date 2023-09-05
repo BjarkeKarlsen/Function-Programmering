@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>Exercise1._6</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Program.fs" />
+        <Compile Include="DayUtils.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DateUtils\DateUtils.fsproj" />
+    </ItemGroup>
+
+</Project>
