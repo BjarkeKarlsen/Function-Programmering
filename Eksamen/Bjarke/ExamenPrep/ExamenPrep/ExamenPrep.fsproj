@@ -9,8 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="UnitTest1.fs"/>
-        <Compile Include="Program.fs"/>
+        <Compile Include="FetchStrings.fs" />
+        <Compile Include="Morse.fs" />
+        <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
