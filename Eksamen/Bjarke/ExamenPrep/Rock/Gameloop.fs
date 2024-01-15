@@ -47,33 +47,34 @@ let updateAction total =
     | _ -> PlayRound
     
 
-let playRound scoreboard =
+let playRound scoreboard random =
     let playerAction = action()
     
     match playerAction with
-    | None -> Quit
+    | None -> Quit, scoreboard
     | Some weapon ->
-        let computer = generateChoice |> aiPicksGUI 
+        let computer = generateChoice random |> aiPicksGUI 
         outCome(weapon, computer)
         |> roundEndedGUI
         |> (fun newScore -> updateScore newScore scoreboard)
-        |> (fun score -> updateAction score.Total)
+        |> (fun score -> updateAction score.Total), scoreboard
 
 let run =     
     let mutable scoreboard = { Player = 0; Computer = 0; Total = 0 }
-    let action = Action.PlayRound;  
+    let action = Action.PlayRound
+    let random = Random()
    
     playerChoiceGUI
     
-    let rec gameLoop action =
+    let rec gameLoop action scoreboard =
         match action with
         | PlayRound -> 
-            playRound scoreboard 
-            |> gameLoop
+            let newAction, newScoreboard = playRound scoreboard random 
+            gameLoop newAction newScoreboard
         | MaxRounds | Quit -> 
             scoreGUI scoreboard (calculatePercentage scoreboard)
             |> (fun _ -> 0)
 
-    gameLoop action
+    gameLoop action scoreboard
     0
 

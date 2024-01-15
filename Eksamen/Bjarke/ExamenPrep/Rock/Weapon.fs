@@ -21,9 +21,9 @@ let getWeapons =
                                 |> Array.toList
     weapons
 
-let generateChoice =
-    let  weapons : Weapon = getWeapons |> (fun weapons -> weapons.[Random().Next(weapons.Length)])
-    weapons
+let generateChoice (random: Random) =
+    let weapons = getWeapons
+    weapons.[random.Next(weapons.Length)]
     
 let getWeaponFromNumber index =
     let weapons : Weapon list = getWeapons
