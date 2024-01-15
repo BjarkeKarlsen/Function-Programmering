@@ -18,7 +18,6 @@ let getPlayerInput =
 
 let playerPicksGUI value =
     printfn $"Player picks: {value}."
-    value
     
 let aiPicksGUI value =
     printfn $"Computer picks: {value}."

@@ -1,6 +1,7 @@
 module ConsoleApp1.Gameloop 
 
 open System
+open System.Collections.Generic
 open GameInfo
 open Weapon
 open ConsoleGUI
@@ -51,33 +52,43 @@ let playRound scoreboard random aiState =
     let playerAction = action()
     
     match playerAction with
-    | None -> Quit, scoreboard
+    | None -> Quit, scoreboard, aiState
     | Some weapon ->
-        let computer = generateChoice random |> aiPicksGUI 
+        playerPicksGUI weapon
+        let computerWeapon = makeAIMove aiState random |> aiPicksGUI 
+        let newAiState = updateAI computerWeapon aiState
+        
+        //let computer = generateChoice random |> aiPicksGUI 
         let newScoreboard = 
-            outCome(weapon, computer)
+            outCome(weapon, computerWeapon)
             |> roundEndedGUI
             |> (fun newScore -> updateScore newScore scoreboard)
 
         let newAction = updateAction newScoreboard.Total
-        newAction, newScoreboard
+        newAction, newScoreboard, newAiState
 
 let run =     
     let action = Action.PlayRound
     let random = Random()
-    let aiState = initAIState
-   
+    let weapons = getWeapons
+    let mutable initialPlayerMoves : Dictionary<Weapon, int> = weapons
+                                                               |> List.map (fun w -> w, 0)
+                                                               |> Map.ofList  
+                                                               |> Dictionary
+    let mutable aiState = { playerMoves = initialPlayerMoves; aiAction = RandomMove; round = 0 }
+
+
     playerChoiceGUI
     
-    let rec gameLoop action scoreboard =
+    let rec gameLoop action scoreboard aiState =
         match action with
         | PlayRound -> 
-            let newAction, newScoreboard = playRound scoreboard random 
-            gameLoop newAction newScoreboard aiState
+            playRound scoreboard random aiState
+            |> fun (newAction, newScoreboard, newAiState) -> gameLoop newAction newScoreboard newAiState
         | MaxRounds | Quit -> 
             scoreGUI scoreboard (calculatePercentage scoreboard)
             |> (fun _ -> 0)
 
-    gameLoop action { Player = 0; Computer = 0; Total = 0 }, aiState
+    let _ = gameLoop action { Player = 0; Computer = 0; Total = 0 } aiState
     0
 
