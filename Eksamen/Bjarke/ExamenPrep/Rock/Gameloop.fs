@@ -47,7 +47,7 @@ let updateAction total =
     | _ -> PlayRound
     
 
-let playRound scoreboard random =
+let playRound scoreboard random aiState =
     let playerAction = action()
     
     match playerAction with
@@ -65,6 +65,7 @@ let playRound scoreboard random =
 let run =     
     let action = Action.PlayRound
     let random = Random()
+    let aiState = initAIState
    
     playerChoiceGUI
     
@@ -72,11 +73,11 @@ let run =
         match action with
         | PlayRound -> 
             let newAction, newScoreboard = playRound scoreboard random 
-            gameLoop newAction newScoreboard
+            gameLoop newAction newScoreboard aiState
         | MaxRounds | Quit -> 
             scoreGUI scoreboard (calculatePercentage scoreboard)
             |> (fun _ -> 0)
 
-    gameLoop action { Player = 0; Computer = 0; Total = 0 }
+    gameLoop action { Player = 0; Computer = 0; Total = 0 }, aiState
     0
 
