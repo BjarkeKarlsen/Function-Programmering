@@ -54,13 +54,15 @@ let playRound scoreboard random =
     | None -> Quit, scoreboard
     | Some weapon ->
         let computer = generateChoice random |> aiPicksGUI 
-        outCome(weapon, computer)
-        |> roundEndedGUI
-        |> (fun newScore -> updateScore newScore scoreboard)
-        |> (fun score -> updateAction score.Total), scoreboard
+        let newScoreboard = 
+            outCome(weapon, computer)
+            |> roundEndedGUI
+            |> (fun newScore -> updateScore newScore scoreboard)
+
+        let newAction = updateAction newScoreboard.Total
+        newAction, newScoreboard
 
 let run =     
-    let mutable scoreboard = { Player = 0; Computer = 0; Total = 0 }
     let action = Action.PlayRound
     let random = Random()
    
@@ -75,6 +77,6 @@ let run =
             scoreGUI scoreboard (calculatePercentage scoreboard)
             |> (fun _ -> 0)
 
-    gameLoop action scoreboard
+    gameLoop action { Player = 0; Computer = 0; Total = 0 }
     0
 
