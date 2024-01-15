@@ -7,6 +7,10 @@
 
     <ItemGroup>
         <Compile Include="Program.fs"/>
+        <Compile Include="Weapon.fs" />
+        <Compile Include="GameGUI.fs" />
+        <Compile Include="Game.fs" />
+        <Compile Include="Prog.fs" />
     </ItemGroup>
 
 </Project>
