@@ -1,41 +1,42 @@
 module ConsoleApp1.ConsoleGUI
 
 open System
-open ConsoleApp1.Weapon
 open ConsoleApp1.GameInfo
 
 let playerChoiceGUI =
     printfn "Choose a weapon:"
-    printfn "1. Rock"
-    printfn "2. Paper"
-    printfn "3. Scissors"
-    printfn "4. Lizard"
-    printfn "5. Spock"
+    printfn "0. Rock"
+    printfn "1. Paper"
+    printfn "2. Scissors"
+    printfn "3. Lizard"
+    printfn "4. Spock"
+    printfn "q for quit"
+
+let getPlayerInput =    
+    Console.ReadLine()
     
-    let playerInput = Console.ReadLine()
-    getWeaponFromNumber (int playerInput)
 
 let playerPicksGUI value =
-    $"Player picks: {value}."
-
+    printfn $"Player picks: {value}."
+    value
+    
 let aiPicksGUI value =
-    $"Computer picks: {value}."
+    printfn $"Computer picks: {value}."
+    value
 
 let gameScoreGUI (scoreboard) =
     printfn $"Player score: %d{scoreboard.Player} and Computer score: %d{scoreboard.Computer} "
-    
-
 
 let gameEndedGUI (scoreboard, maxScore) =
     match scoreboard with
-        | { Player = p; Computer = c } when p >= maxScore -> printfn "Player wins!"
-        | { Player = p; Computer = c } when c >= maxScore -> printfn "Computer wins!"
+        | { Player = p; Computer = _ } when p >= maxScore -> printfn "Player wins!"
+        | { Player = _; Computer = c } when c >= maxScore -> printfn "Computer wins!"
         | _ -> printfn "Game tied!"
         
 let roundEndedGUI outCome = 
     match outCome with
-    | Player -> printfn "Player Won this round"
-    | Computer -> printfn "Computer won this round"
+    | Win -> printfn "Player Won this round"
+    | Lose -> printfn "Computer won this round"
     | Tie -> printfn "It was a tie"
     outCome
 

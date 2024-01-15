@@ -5,14 +5,14 @@ type State =  { PlayerPercentage : float; ComputerPercentage: float; TotalPercen
 
 
 type OutCome =
-    | Player
-    | Computer
+    | Win
+    | Lose
     | Tie
 
 let updateScore point score =
     match point with
-        | Player -> { score with Player = score.Player + 1; Computer = score.Computer; Total = score.Total + 1}
-        | Computer -> { score with Player = score.Player; Computer = score.Computer + 1; Total = score.Total + 1}
+        | Win -> { score with Player = score.Player + 1; Computer = score.Computer; Total = score.Total + 1}
+        | Lose -> { score with Player = score.Player; Computer = score.Computer + 1; Total = score.Total + 1}
         | Tie -> { score with Player = score.Player; Computer = score.Computer; Total = score.Total + 1}
     
 let calculatePercentage score =
