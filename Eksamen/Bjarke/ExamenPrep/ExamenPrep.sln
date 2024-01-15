@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExamenPrep", "ExamenPrep\ExamenPrep.fsproj", "{8B3DD1C7-ACEB-4162-9A2F-3DCC1D73F429}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.fsproj", "{79A326CE-9BED-4C8C-8357-74700ECB68F3}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Rock", "Rock\Rock.fsproj", "{79A326CE-9BED-4C8C-8357-74700ECB68F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
