@@ -18,7 +18,10 @@ let main argv =
     
     let writer = spawn actorSystem "WriterActor" (actorOf consoleWriterActor)
     
-    let validator = spawn actorSystem "validatorActor" (actorOf2 (validationActor writer))
+    let coordinator = spawn actorSystem "coordinatorActor" (actorOf2 fileCoordinatorActor)
+      //                             [ SpawnOption.SupervisorStrategy(strategy()) ]
+    
+    let validator = spawn actorSystem "validatorActor" (actorOf2 (fileValidationActor writer coordinator))
     
     let reader = spawn actorSystem "ReaderActor" (actorOf2 (consoleReaderActor validator))
     
