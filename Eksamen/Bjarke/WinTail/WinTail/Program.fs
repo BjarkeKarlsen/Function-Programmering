@@ -1,13 +1,11 @@
 
 open Akka.FSharp
 open Akka.Actor
-open WinTail.Actors
+open Wintail.Actors
 open System
 
 [<EntryPoint>]
 let main argv =
-    //use system = System.create "MyActorSystem" (Configuration.load())
-    
     let strategy () = Strategy.OneForOne(( fun error ->
     match error with
     | :? ArithmeticException -> Directive.Resume
@@ -18,12 +16,13 @@ let main argv =
     let actorSystem = create "MyActorSystem"
                                      (Configuration.load())
     
-    let writer = spawn actorSystem "WriterActor" (actorOf consoleWriter)
+    let writer = spawn actorSystem "WriterActor" (actorOf consoleWriterActor)
     
-    let reader = spawn actorSystem "ReaderActor" (actorOf2 (consoleReaderActor writer))
+    let validator = spawn actorSystem "validatorActor" (actorOf2 (validationActor writer))
     
-    writer <! Start
-    reader <! Start
+    let reader = spawn actorSystem "ReaderActor" (actorOf2 (consoleReaderActor validator))
+    
+    reader <! StartProcessing
     
     actorSystem.WhenTerminated.Wait ()
     
