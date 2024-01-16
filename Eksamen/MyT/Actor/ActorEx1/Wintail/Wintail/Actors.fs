@@ -11,6 +11,8 @@ type ConsoleReaderMessages =
     
 type ConsoleWriterMessages =
     | Command of string
+
+    
 let consoleReaderActor writer (mailbox: Actor<ConsoleReaderMessages>) msg =
     
     match msg with
@@ -41,5 +43,5 @@ let consoleWriterActor msg =
                     printColored text ConsoleColor.Green
                 else
                     printColored text ConsoleColor.Red
-            
+        
      
