@@ -8,9 +8,14 @@
 
     <ItemGroup>
       <Compile Include="Type.fs" />
-      <Compile Include="Content1.fs" />
+      <Compile Include="Parsers.fs" />
       <Compile Include="Content2.fs" />
       <Compile Include="Program.fs" />
+      <Content Include="txtData.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FParsec" Version="2.0.0-beta2" />
     </ItemGroup>
 
 </Project>
