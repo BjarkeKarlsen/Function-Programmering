@@ -71,7 +71,7 @@ let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
                     output Success data
                 
                 //Output an aggregated RSS feed containing merged data from all rssFeedActors 
-            | _ -> output Error (sprintf "Unhandled message: %A" msg)
+            | _ -> output Error $"Unhandled message: %A{msg}"
                 
             return! loop()
          }

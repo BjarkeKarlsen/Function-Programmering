@@ -11,6 +11,7 @@ open Problem2.RssFetcherActor
 
 let RssFeedActor (name: string) (mailbox:Actor<RssFeedMessages>) =
     let mutable data = ""
+    let mutable state = Fresh ""
     
     spawn mailbox.Context (name) (RssFetchActor name)|> ignore
     let output status message =
@@ -25,11 +26,12 @@ let RssFeedActor (name: string) (mailbox:Actor<RssFeedMessages>) =
             | RssFeedMessages.Refresh ->
                 output ConsoleLine "Refreshing data..."
                 data <- (mailbox.Context.Child(name).Ask<string>(FetcherMessages.Fetch)).Result.ToString()
-                
+
             | RssFeedMessages.GetData ->
+                output ConsoleLine $"Received data: {data}"                                  
                 async {         
                     return data
-                } |!> mailbox.Sender()
+                } |!> mailbox.Sender()       
             | RssFeedMessages.PoisonPill ->
                 mailbox.Context.Stop(mailbox.Self)
                 
@@ -39,3 +41,23 @@ let RssFeedActor (name: string) (mailbox:Actor<RssFeedMessages>) =
          }
     loop() 
     
+    
+    // | Fresh _, RssFeedMessages.Refresh ->
+    //             output ConsoleLine "Refreshing data..."
+    //             state <- Fetching
+    //             mailbox.Self <! GetData
+    //             
+    //         | Fresh data, RssFeedMessages.GetData ->
+    //             output ConsoleLine $"Received data: {data}"                                  
+    //             async {         
+    //                 return data
+    //             } |!> mailbox.Sender()
+    //             state <- Fresh ""
+    //             
+    //             
+    //         | Fetching, RssFeedMessages.GetData ->
+    //             output ConsoleLine "Fetching data..."
+    //
+    //             data <- (mailbox.Context.Child(name).Ask<string>(FetcherMessages.Fetch)).Result.ToString()
+    //             state <- Fresh data
+    //             mailbox.Self <! GetData 
