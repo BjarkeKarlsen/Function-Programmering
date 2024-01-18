@@ -1,5 +1,4 @@
-﻿// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
-module Exam.Part2.Messages
+﻿module Exam.Part2.Messages
 
 open System
 

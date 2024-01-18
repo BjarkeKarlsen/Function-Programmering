@@ -1,9 +1,6 @@
 module Exam.Part2.Output
 
-
 open System
-open Akka.Actor
-open Akka.FSharp
 open Exam.Part2.Messages
 
 

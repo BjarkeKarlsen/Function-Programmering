@@ -1,6 +1,6 @@
 ﻿open System
 
-open System
+
 open Akka.Actor
 open Akka.FSharp
 open Exam.Part2.Messages

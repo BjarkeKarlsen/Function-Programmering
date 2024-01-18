@@ -10,7 +10,7 @@ let (|ToInputMessage|_|) (cmdStr: string) =
     | "unsubscribe" -> Some UnSubscribe
     | "refresh" -> Some Refresh
     | "refreshall" -> Some RefreshAll
-    | "getaggregatedfeed" -> Some GetAggregatedFeed
+    | "getaggregatedfeed" | "aggre" -> Some GetAggregatedFeed
     | _ -> None
 
 let cmdActor (mailbox: Actor<InputMessages>) msg =

@@ -9,22 +9,24 @@ open Exam.Part2.FetcherActor
 //with mutable data
 let FeedActor (url: string) (mailbox:Actor<RssFeedMessages>) =
     let mutable data = ""
-    spawn mailbox.Context "url" (FetcherActor url) |> ignore
+    let name = "FeedActor" + url
+    spawn mailbox.Context name (FetcherActor url) |> ignore
     
     let output status message =
          select "/user/output" mailbox.Context.System <! status message
-        
+         
     let rec loop () =
         actor {
             let! msg = mailbox.Receive()   
              
             match msg with
             | RssFeedMessages.Refresh ->
-                let childActor = mailbox.Context.Child("url")
+                let childActor = mailbox.Context.Child(name)
                 match childActor.IsNobody() with
-                | true -> printfn "Child actor 'url' not found."
-                | false -> data <- (childActor.Ask<string>(FetcherMessages.Fetch)).Result.ToString()
-                output Success data
+                | true -> output ValidationError  $"Child actor %s{name} not found."
+                | false ->
+                    output Success $"Refreshing: %s{url}"
+                    data <- (childActor.Ask<string>(FetcherMessages.Fetch)).Result.ToString()
             | RssFeedMessages.GetData  ->
                 async {         
                     return data
