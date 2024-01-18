@@ -21,37 +21,20 @@ let FeedActor (url: string) (mailbox:Actor<RssFeedMessages>) =
             match msg with
             | RssFeedMessages.Refresh ->
                 let childActor = mailbox.Context.Child("url")
-                if childActor.IsNobody() then
-                    printfn "Child actor 'url' not found."
-                else
-                    data <- (childActor.Ask<string>(FetcherMessages.Fetch)).Result.ToString()
+                match childActor.IsNobody() with
+                | true -> printfn "Child actor 'url' not found."
+                | false -> data <- (childActor.Ask<string>(FetcherMessages.Fetch)).Result.ToString()
                 output Success data
-            | RssFeedMessages.GetData replyChannel  ->
-                printfn "Martin what youy duing"
-                output Success (sprintf $"%A{data}")
-                //replyChannel.Reply data
-            | Reply data_ ->
-                data <- data_
-            | _ -> "Got it"
+            | RssFeedMessages.GetData  ->
+                async {         
+                    return data
+                } |!> mailbox.Sender()
             return! loop()
          }
     loop() 
 
     
         
-    
-    // do observer.Start ()
-    // let output status message =
-    //      select "/user/output" mailbox.Context.System <! status message
-    //      
-    // mailbox.Defer <| fun () ->
-    //     (observer :> IDisposable).Dispose()
-    //     (fileStreamReader :> IDisposable).Dispose()
-    //     (fileStream :> IDisposable).Dispose()
-    //
-    // mailbox.Self <! InitialRead (filePath, text)
-    //        
-    //   
-    
+
     
     

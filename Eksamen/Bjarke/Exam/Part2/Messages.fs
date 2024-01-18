@@ -20,8 +20,7 @@ type ConsoleWriterMessages =
 
 type RssFeedMessages =
     | Refresh
-    | GetData of AsyncReplyChannel<Item list>
-    | Reply of string
+    | GetData 
     
 type RssSubscriptionMessages =
     | Subscribe of string

@@ -31,14 +31,12 @@ let FetcherActor (url: string) (mailbox: Actor<FetcherMessages>) =
         match msg with
         |   FetcherMessages.Fetch  ->
             async {
-                //let! data = getSomeData()
-                let response = createItemList 10
-                
+                let response = createItemList 10            
                 
                 Threading.Thread.Sleep(random.Next(0, 5000))
             
-                // if random.NextDouble() < 0.5 then
-                //     invalidOp "Could not fetch"
+                if random.NextDouble() < 0.5 then
+                    invalidOp "Could not fetch"
                 let s = response.ToString()
                     
                 return s

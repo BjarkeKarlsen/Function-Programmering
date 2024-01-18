@@ -3,9 +3,8 @@ open System.Collections.Generic
 open Exam.Part2.Messages
 open Exam.Part2.ChildActor
 open Akka.FSharp
+open Akka.Actor
 
-
-//
 let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
     let mutable subscribers = []
 
@@ -28,7 +27,6 @@ let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
                         match url with
                         | name when List.contains name subscribers ->
                             output ValidationError "UnSubscribe"
-                            //mailbox.Context.Child name <! RssFeedMessages.UnSubscribe url
                         | _ -> output ValidationError (sprintf $"Url with name {url} not found")
             | RssSubscriptionMessages.Refresh url ->
                         match url with
@@ -41,26 +39,10 @@ let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
             | RssSubscriptionMessages.GetAggregatedFeed  ->
                         output Success "Aggregate"
                         for subscriber in subscribers do
-                            mailbox.Context.Child subscriber  <! RssFeedMessages.GetData 
-                        //let mutable aggregatedData Item list 
-                        // for subscriber in subscribers do
-                        //     let data : AsyncReplyChannel<Item list> = []
-                        //     mailbox.Context.Child subscriber  <! RssFeedMessages.GetData data
-                        //     aggregatedData <- data
-                        // let aggregatedData  =
-                        //     subscribers
-                        //     |> List.map (fun subscriber ->
-                        //         match mailbox.Context.Child subscriber with
-                        //         | feedActor ->
-                        //             //let data : AsyncReplyChannel<Item list>
-                        //             let! data = Async.AwaitTask <| feedActor <! RssFeedMessages.GetData(data)
-                        //             aggregatedData <- aggregatedData @ data
-                        //             // let replyChannel = mailbox.Self.SelfReplyChannel
-                        //             // feedActor <! RssFeedMessages.GetData(replyChannel)
-                        //             // Async.RunSynchronously(replyChannel.Receive)
-                        //         | _ -> [])
-                        //     |> List.concat
-                        // printfn $"Aggregated Feed: %A{aggregatedData}"
+                            let childActor = mailbox.Context.Child(subscriber)
+                            match childActor.IsNobody() with
+                            | true -> printfn "Child actor 'url' not found."
+                            | false -> (childActor.Ask<string>(RssFeedMessages.GetData)).Result.ToString() |> output Success                           
             return! loop()
          }
     loop() 
