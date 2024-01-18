@@ -18,6 +18,3 @@ type Measurement ={
     Watt: float
     }
     
-type TrainingData =
-    |ExerciseData of Exercises
-    | MeasurementData of Measurement

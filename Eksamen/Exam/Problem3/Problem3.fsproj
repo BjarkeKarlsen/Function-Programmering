@@ -9,7 +9,7 @@
     <ItemGroup>
       <Compile Include="Type.fs" />
       <Compile Include="Parsers.fs" />
-      <Compile Include="Content2.fs" />
+      <Compile Include="Calculations.fs" />
       <Compile Include="Program.fs" />
       <Content Include="txtData.txt" />
     </ItemGroup>

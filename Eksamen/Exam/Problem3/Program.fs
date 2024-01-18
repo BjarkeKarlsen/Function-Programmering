@@ -1,42 +1,26 @@
 module Problem3.Program
 open System
+open System.IO
 open FParsec
 open Problem3.Parsers
 open Problem3.Type
+open Problem3.Calculations
 
 [<EntryPoint>]
 let main argv =
-    let path = "../../../txtData.txt"
+    let data = File.ReadAllLines("../../../txtData.txt")
     
-    let inputString = "2019-01-29T17:57:25.000Z,4957.0,40861.16"
+    let exercises, measurements = parseData(String.concat "\n" data)
     
-    let print (exercises: Exercises) (measurements: Measurement list) =
-        printfn "TrainingLoad:"
-        printfn $"StartTime: {exercises.StartTime}"
-        printfn $"TotalTime: {exercises.TotalTime}"
-        printfn $"Distance: {exercises.Distance}"
-        printfn "Measurements:"
-        measurements |> List.iter (fun m ->
-            printfn $"Time: {m.Time}"
-            printfn $"DistanceTraveled: {m.DistanceTraveled}"
-            printfn $"Speed: {m.Speed}"
-            printfn $"Cadence: {m.Cadence}"
-            printfn $"Watt: {m.Watt}")
     
-    match run exercisesParser inputString with
-        | Success(result, _, _) -> 
-            printfn "Parsed result: %A" result
-        | Failure(errorMsg, _, _) ->
-            
-            printfn "Parsing failed: %s" errorMsg
-        | _ -> failwith "todo"
+    let normalized = normalized measurements
+    let ftp = 300
+    let intensityFactor = intensityFactor normalized ftp
+    let tss = trainingStressScore exercises.TotalTime normalized intensityFactor ftp
     
-    let input2 = "2019-01-29T17:57:25.000Z#3.740000009536743#46$3.742000102996826#77"
-    match run measurementsParser input2 with
-        | Success(result, _, _) -> 
-            printfn "Parsed result: %A" result
-        | Failure(errorMsg, _, _) ->
-            
-            printfn "Parsing failed: %s" errorMsg
-        | _ -> failwith "todo"
+    printfn $"Normalized data: {normalized}"
+    printfn $"Intensity Factor: {intensityFactor}"
+    printfn $"Intensity Factor: {tss}"
+    print exercises measurements
+
     0 

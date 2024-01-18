@@ -1,9 +1,11 @@
 ﻿
 module Problem1.Type
 
-type Board=
-    | Hi
-type Box =
-    | Hello
 type Cell =
-    | Hhihi
+    int option
+    
+type Box =
+    Cell list 
+
+type Board =
+    Box list
