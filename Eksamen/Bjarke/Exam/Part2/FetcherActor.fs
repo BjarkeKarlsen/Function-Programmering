@@ -29,15 +29,20 @@ let FetcherActor (url: string) (mailbox: Actor<FetcherMessages>) =
         actor {
         let! msg = mailbox.Receive()   
         match msg with
-        |   FetcherMessages.Fetch replyChannel  ->
+        |   FetcherMessages.Fetch  ->
             async {
-                    let response = createItemList 10
-                    Threading.Thread.Sleep(random.Next(0, 5000))
-                    // if random.NextDouble() < 0.5 then
-                    //     invalidOp "Could not fetch"
-                    // Send the response back using the reply channel
-                    replyChannel.Reply response
-                } |> Async.Start |> ignore
+                //let! data = getSomeData()
+                let response = createItemList 10
+                
+                
+                Threading.Thread.Sleep(random.Next(0, 5000))
+            
+                // if random.NextDouble() < 0.5 then
+                //     invalidOp "Could not fetch"
+                let s = response.ToString()
+                    
+                return s
+            } |!> mailbox.Sender()
 
             return! loop()
          }

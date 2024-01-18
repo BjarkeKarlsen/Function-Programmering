@@ -31,7 +31,7 @@ type RssSubscriptionMessages =
     | GetAggregatedFeed
 
 type FetcherMessages =
-    | Fetch of AsyncReplyChannel<Item list>
+    | Fetch 
 
 type InputMessages =
     | Subscribe 

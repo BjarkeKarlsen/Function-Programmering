@@ -20,15 +20,19 @@ let FeedActor (url: string) (mailbox:Actor<RssFeedMessages>) =
              
             match msg with
             | RssFeedMessages.Refresh ->
-                // Use an AsyncReplyChannel to collect data from FetcherActor
-                mailbox.Context.Child "url" <! FetcherMessages.Fetch
-                
+                let childActor = mailbox.Context.Child("url")
+                if childActor.IsNobody() then
+                    printfn "Child actor 'url' not found."
+                else
+                    data <- (childActor.Ask<string>(FetcherMessages.Fetch)).Result.ToString()
+                output Success data
             | RssFeedMessages.GetData replyChannel  ->
                 printfn "Martin what youy duing"
                 output Success (sprintf $"%A{data}")
                 //replyChannel.Reply data
             | Reply data_ ->
                 data <- data_
+            | _ -> "Got it"
             return! loop()
          }
     loop() 
