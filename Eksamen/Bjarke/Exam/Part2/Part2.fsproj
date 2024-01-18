@@ -7,7 +7,8 @@
 
     <ItemGroup>
       <Compile Include="Messages.fs" />
-      <Compile Include="ChildActor.fs" />
+      <Compile Include="FetcherActor.fs" />
+      <Compile Include="RssFeedActor.fs" />
       <Compile Include="RssSubscriptionActor.fs" />
       <Compile Include="cmdActor.fs" />
       <Compile Include="Output.fs" />

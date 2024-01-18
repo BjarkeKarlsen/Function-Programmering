@@ -7,7 +7,7 @@ open Akka.FSharp
 
 //
 let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
-    let mutable subscribesUrls = []
+    let mutable subscribers = []
 
     let output status message =
          select "/user/output" mailbox.Context.System <! status message
@@ -19,26 +19,27 @@ let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
             match msg with 
             | RssSubscriptionMessages.Subscribe url->
                           match url with
-                            |name when List.contains name subscribesUrls ->
+                            |name when List.contains name subscribers ->
                                 output ValidationError (sprintf $"Already exists url with the name %s{name}")
                             | _ -> 
-                              spawn mailbox.Context (url) (MutableChildActor url)|> ignore
-                              subscribesUrls <- url :: subscribesUrls                         
+                              spawn mailbox.Context (url) (FeedActor url)|> ignore
+                              subscribers <- url :: subscribers                         
             | RssSubscriptionMessages.UnSubscribe url ->
                         match url with
-                        | name when List.contains name subscribesUrls ->
-                            mailbox.Context.Child name <! Start
+                        | name when List.contains name subscribers ->
+                            mailbox.Context.Child name <! RssFeedMessages.UnSubscribe url
                         | _ -> output ValidationError (sprintf $"Url with name {url} not found")
             | RssSubscriptionMessages.Refresh url ->
                         match url with
-                        | name when List.contains name subscribesUrls ->
-                            mailbox.Context.Child name <! Start
+                        | name when List.contains name subscribers ->
+                            mailbox.Context.Child name  <! RssFeedMessages.Refresh url
                         | _ -> output ValidationError (sprintf $"Url with name {url} not found")
             | RssSubscriptionMessages.RefreshAll ->
-                         printfn "RefreshAll"
-                         //mailbox.Context.Child  <! Start
+                         for subscriber in subscribers do
+                            mailbox.Context.Child subscriber  <! RssFeedMessages.Refresh subscriber
             | RssSubscriptionMessages.GetAggregatedFeed  ->
-                        printfn "getAggregatedFeed"      
+                        for subscriber in subscribers do
+                            mailbox.Context.Child subscriber  <! RssFeedMessages.GetAggregatedFeed 
             return! loop()
          }
     loop() 

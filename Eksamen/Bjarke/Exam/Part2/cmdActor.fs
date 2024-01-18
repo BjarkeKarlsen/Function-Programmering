@@ -32,7 +32,7 @@ let cmdActor (mailbox: Actor<InputMessages>) msg =
         | [| ""; _ |] ->
             output ValidationError "Error: command missing"
         | [| "exit" |] -> 
-            printf "Exit" 
+            mailbox.Context.Stop(mailbox.Self) 
         | [| (ToInputMessage cmd); arg |] ->
             match cmd with
             | Subscribe -> select "/user/parentActor" mailbox.Context.System <! RssSubscriptionMessages.Subscribe arg

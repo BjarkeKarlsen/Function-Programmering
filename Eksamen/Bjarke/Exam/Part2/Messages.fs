@@ -8,9 +8,9 @@ type ConsoleWriterMessages =
     | ValidationError of string
     | NullInputError of string
 
-type ChildMessages =
-    | Start
-    | Cancel
+type RssFeedMessages =
+    | Refresh
+    | GetData
     
 type RssSubscriptionMessages =
     | Subscribe of string
@@ -18,7 +18,10 @@ type RssSubscriptionMessages =
     | Refresh of string
     | RefreshAll
     | GetAggregatedFeed
-    
+
+type FetcherMessages =
+    | Fetch
+
 type InputMessages =
     | Subscribe 
     | UnSubscribe 
