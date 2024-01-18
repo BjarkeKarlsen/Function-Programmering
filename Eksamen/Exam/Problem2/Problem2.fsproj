@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>Part2</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="Messages.fs" />
+      <Compile Include="CmdActor.fs" />
+      <Compile Include="RssSubscriptionActor.fs" />
+      <Compile Include="RssFeedActor.fs" />
+      <Compile Include="FetcherActor.fs" />
+      <Compile Include="Output.fs" />
+      <Compile Include="Program.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Akka" Version="1.5.15" />
+      <PackageReference Include="Akka.FSharp" Version="1.5.15" />
+      <PackageReference Update="FSharp.Core" Version="8.0.101" />
+    </ItemGroup>
+
+</Project>

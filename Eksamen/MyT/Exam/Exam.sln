@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem1", "Problem1\Problem1.fsproj", "{8EB7693C-3EB2-419F-BD99-B872F7357579}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Part1", "Part1\Part1.fsproj", "{8EB7693C-3EB2-419F-BD99-B872F7357579}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem2", "Problem2\Problem2.fsproj", "{2F2BC414-8F8C-47BA-9316-FD6DCD3EEF86}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Part2", "Part2\Part2.fsproj", "{2F2BC414-8F8C-47BA-9316-FD6DCD3EEF86}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem3", "Problem3\Problem3.fsproj", "{AD8A03D8-D567-4B38-BEFB-7CBF46DCF38D}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Part3", "Part3\Part3.fsproj", "{AD8A03D8-D567-4B38-BEFB-7CBF46DCF38D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
