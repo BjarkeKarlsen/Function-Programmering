@@ -6,10 +6,10 @@ open Problem3.Parsers
 [<EntryPoint>]
 let main argv =
     let path = "../../../txtData.txt"
-    //let data = readLinesFromFile path
-    
     
     let inputString = "2019-01-29T17:57:25.000Z,4957.0,40861.16"
+    
+    let print 
         
     match run exercisesParser inputString with
         | Success(result, _, _) -> 

@@ -54,36 +54,8 @@ let performanceParser: Parser<float * int, unit> =
     pipe2 speedParser wattParser (fun speed watt -> (speed, watt))
     
 // time#distanceTraveled#cadance$speed#watt
-let measurementsParser =
+let measurementsParser  =
     pipe2 dataPointParser performanceParser (fun datapoint performance -> (datapoint, performance))
 
-let combinedParser =
+let combinedParser (exercises: Exercises) (measurement: Measurement) =
     pipe2 exercisesParser (many measurementsParser) (fun exercise measurement -> (exercise, measurement))
-
-let average (data: Measurement list):float =
-    let total = data |> List.sumBy (fun x -> x.Watt)
-    let count = data |> List.length
-    (float total) / (float count)
-
-let averageforPower (data: float list) =
-    let total = data |> List.sum
-    let count = data |> List.length
-    (float total) / (float count)
-
-let movingAverage data: float list =
-    data
-    |> List.skip 30
-    |> List.windowed 30
-    |> List.map average
-    
-let fourthpower (data:float) float =
-    data ** 4.0
-    
-let averageFourthPower data =
-    
- 
-        
-let fourthpoweraverage data =
-    let fourthpowerdata = fourthpower data
-    let newData = average fourthpowerdata
-    newData
