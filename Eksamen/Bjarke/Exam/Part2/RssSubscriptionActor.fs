@@ -39,25 +39,28 @@ let RssSubscriptionActor (mailbox: Actor<RssSubscriptionMessages>) =
                          for subscriber in subscribers do
                             mailbox.Context.Child subscriber  <! RssFeedMessages.Refresh 
             | RssSubscriptionMessages.GetAggregatedFeed  ->
-                        let mutable aggregatedData Item list 
+                        output Success "Aggregate"
                         for subscriber in subscribers do
-                            let data : AsyncReplyChannel<Item list> = []
-                            mailbox.Context.Child subscriber  <! RssFeedMessages.GetData data
-                            aggregatedData <- data
+                            mailbox.Context.Child subscriber  <! RssFeedMessages.GetData 
+                        //let mutable aggregatedData Item list 
+                        // for subscriber in subscribers do
+                        //     let data : AsyncReplyChannel<Item list> = []
+                        //     mailbox.Context.Child subscriber  <! RssFeedMessages.GetData data
+                        //     aggregatedData <- data
                         // let aggregatedData  =
                         //     subscribers
                         //     |> List.map (fun subscriber ->
                         //         match mailbox.Context.Child subscriber with
                         //         | feedActor ->
-                        //             let data : AsyncReplyChannel<Item list>
-                        //             RssFeedMessages.GetData(data) // how to save it?
-                        //             
+                        //             //let data : AsyncReplyChannel<Item list>
+                        //             let! data = Async.AwaitTask <| feedActor <! RssFeedMessages.GetData(data)
+                        //             aggregatedData <- aggregatedData @ data
                         //             // let replyChannel = mailbox.Self.SelfReplyChannel
                         //             // feedActor <! RssFeedMessages.GetData(replyChannel)
                         //             // Async.RunSynchronously(replyChannel.Receive)
                         //         | _ -> [])
                         //     |> List.concat
-                        printfn $"Aggregated Feed: %A{aggregatedData}"
+                        // printfn $"Aggregated Feed: %A{aggregatedData}"
             return! loop()
          }
     loop() 

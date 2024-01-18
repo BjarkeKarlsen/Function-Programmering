@@ -23,21 +23,23 @@ let createRandomItem () =
     }
     
 let createItemList count = [ for _ in 1..count -> createRandomItem() ]
-
+            
 let FetcherActor (url: string) (mailbox: Actor<FetcherMessages>) =
     let rec loop () =
         actor {
-            let! msg = mailbox.Receive()   
-             
-            match msg with
-            |   FetcherMessages.Fetch ->
-                Threading.Thread.Sleep(random.Next(0, 5000))
-                
-                let itemList = createItemList 10
-
-                if random.NextDouble() < 0.5 then
-                    invalidOp "Could not fetch"
+        let! msg = mailbox.Receive()   
+        match msg with
+        |   FetcherMessages.Fetch replyChannel  ->
+            async {
+                    let response = createItemList 10
+                    Threading.Thread.Sleep(random.Next(0, 5000))
+                    // if random.NextDouble() < 0.5 then
+                    //     invalidOp "Could not fetch"
+                    // Send the response back using the reply channel
+                    replyChannel.Reply response
+                } |> Async.Start |> ignore
 
             return! loop()
          }
-    loop() 
+    loop()
+
