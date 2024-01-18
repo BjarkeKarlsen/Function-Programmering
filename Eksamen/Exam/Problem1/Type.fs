@@ -9,3 +9,6 @@ type Box =
 
 type Board =
     Box list
+
+
+    

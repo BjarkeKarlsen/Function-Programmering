@@ -9,8 +9,9 @@
     <ItemGroup>
         <Compile Include="Type.fs" />
         <Compile Include="Content1.fs" />
-        <Compile Include="Conten2.fs" />
+        <Compile Include="Http.fs" />
         <Compile Include="Program.fs" />
+        <Compile Include="Game.fs" />
     </ItemGroup>
 
     <ItemGroup>

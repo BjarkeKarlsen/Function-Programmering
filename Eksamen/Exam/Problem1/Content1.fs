@@ -41,21 +41,29 @@ let checkBox (box:int) (board:Board): Option<bool>=
                              |> List.length = List.length values then Some true else None
         
 let check (board:Board): Result<board, string list> =
-     let mutable errors = []
-  
      
+    let mutable errors = []
      
-
+    let errorMsg cell =
+         ($"{cell} is invalid: " + cell.ToString()) :: errors
      
+    for column in 0..8 do
+         match checkColumn column board with
+         | None
+         | Some false -> errors <- errorMsg column
+         | _ -> printfn "Invalid"
+         
+    for row in 0..8 do
+         match checkRow row board with
+         | None
+         | Some false -> errors <- errorMsg row
+         | _ -> printfn "Invalid"
      
-    
-     
-     
-    
-     
-     
-     
-     
-     
-
-     
+    for box in 0..8 do
+        match checkBox box board with
+        | None
+        | Some false -> errors <- errorMsg box
+        | _ -> printfn "Invalid"
+                
+    if List.isEmpty errors then Ok board else Error errors  
+         
