@@ -19,15 +19,15 @@ let main argv =
             | :? NotSupportedException -> Directive.Stop
             | _ -> Directive.Restart), 10, TimeSpan.FromSeconds(30.))
     
-    let parentActor = spawnOpt actorSystem "parentActor" ( ParentActor)
+    let parentActor = spawnOpt actorSystem "parentActor" ( RssSubscriptionActor)
                                                 [ SpawnOption.SupervisorStrategy(strategy()) ]
     
     let outputActor = spawn actorSystem "output" (actorOf outputActor)
     
-    let inputActor = spawn actorSystem "input" (actorOf2 inputActor)
+    let inputActor = spawn actorSystem "input" (actorOf2 cmdActor)
     
     
-    inputActor <! StartProcessing
+    inputActor <! ContinueProcess
     
     actorSystem.WhenTerminated.Wait()
     

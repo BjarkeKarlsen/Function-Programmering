@@ -12,13 +12,18 @@ type ChildMessages =
     | Start
     | Cancel
     
-type ParentMessages =
-    | Start
-    | CreateChild of string
-    | CallChild of string
-    | Stop
+type RssSubscriptionMessages =
+    | Subscribe of string
+    | UnSubscribe of string
+    | Refresh of string
+    | RefreshAll
+    | GetAggregatedFeed
     
 type InputMessages =
-    | CreateProcessing
-    | StartProcessing
-    | ExitProcessing 
+    | Subscribe 
+    | UnSubscribe 
+    | Refresh 
+    | RefreshAll
+    | GetAggregatedFeed
+    | ContinueProcess
+    | Exit

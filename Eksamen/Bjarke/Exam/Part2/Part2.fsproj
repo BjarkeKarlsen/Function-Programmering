@@ -2,14 +2,14 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <Compile Include="Messages.fs" />
       <Compile Include="ChildActor.fs" />
-      <Compile Include="ParentActor.fs" />
-      <Compile Include="Input.fs" />
+      <Compile Include="RssSubscriptionActor.fs" />
+      <Compile Include="cmdActor.fs" />
       <Compile Include="Output.fs" />
       <Compile Include="Program.fs" />
     </ItemGroup>
