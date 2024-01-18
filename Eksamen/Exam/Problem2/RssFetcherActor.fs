@@ -1,5 +1,6 @@
 module Problem2.RssFetcherActor
 open System.Collections.Generic
+open System.IO
 open Problem2.Messages
 open Akka.FSharp
 open System
@@ -8,14 +9,12 @@ open Akka.FSharp
 open Problem2.Messages
 
 let RssFetchActor name (mailbox:Actor<FetcherMessages>) =
- 
-    let mutable data = []// TODO: Make list or other mutable 0¨
     
     
     let output status message =
          select "/user/output" mailbox.Context.System <! status message
     
-    let generateRandomItem () =
+    let generateRandomItem =
         // Generate a unique identifier for the GUID
         let guid = Guid.NewGuid().ToString()
         // Generate a random date within a specific range
@@ -41,19 +40,19 @@ let RssFetchActor name (mailbox:Actor<FetcherMessages>) =
             match msg with
             | FetcherMessages.Fetch ->
                 async {
-                let randomItem = generateRandomItem()
                 output ConsoleLine $"Subscription: {name}\n"
-                output Success ($"Generated random item:\n{randomItem}" )
+                // let delayMilliseconds = Random().Next(0, 1000)
+                // do! Async.Sleep(delayMilliseconds)
+                let randomItem = generateRandomItem        
+
+                // Emulate IOException with 50% chance
+                // if Random().NextDouble() < 0.5 then
+                //     raise (IOException("Simulated IOException"))
+                   
+                output Success $"Data: {randomItem}"
                 return randomItem
                 } |!> mailbox.Sender()
                 
-                // let data = printfn "Create random item"
-                // mailbox.Context.Sender <! RssFeedMessages.GetData data
-                //let data = "hi"
-                //mailbox.Context.Parent <! GetData_ data
-                //send data to parent
-                // fetch
-                // mailbox.Context.Sender <! RssFeedMessages.GetData 
             return! loop()
          }
     loop() 

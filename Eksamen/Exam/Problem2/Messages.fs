@@ -28,7 +28,10 @@ type RssFeedMessages =
     | GetData
     | PoisonPill
   
-    
+
+type RssFeedState =
+    | Fresh of string  
+    | Fetching
     
 type FetcherMessages =
     | Fetch
