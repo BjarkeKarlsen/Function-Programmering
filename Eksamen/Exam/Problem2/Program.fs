@@ -1,10 +1,14 @@
+module Part2.Program
+
 open System
 open Akka.Actor
 open Akka.FSharp
 open Problem2
 open Problem2.Messages
+open Problem2.RssFetcherActor
+open Problem2.RssFetcherActor
 open Problem2.RssSubscriptionActor
-open Problem2.FetcherActor
+open Problem2.CmdActor
 open Problem2.RssFeedActor
 open Problem2.Output
 
