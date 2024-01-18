@@ -7,9 +7,16 @@
 
     <ItemGroup>
       <Compile Include="Type.fs" />
-      <Compile Include="Content1.fs" />
-      <Compile Include="Content2.fs" />
+      <Compile Include="LoadFile.fs" />
+      <Compile Include="Parser.fs" />
+      <Compile Include="Calculates.fs" />
+      <Content Include="txtData.txt" />
       <Compile Include="Program.fs" />
+      <Content Include="Outputtxt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FParsec" Version="1.1.1" />
     </ItemGroup>
 
 </Project>

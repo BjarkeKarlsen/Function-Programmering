@@ -6,6 +6,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Part2", "Part2\Part2.fsproj
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Part3", "Part3\Part3.fsproj", "{AD8A03D8-D567-4B38-BEFB-7CBF46DCF38D}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ParserUnitTest", "ParserUnitTest\ParserUnitTest.fsproj", "{C67373B6-8FDD-40A3-8921-DD5073A90D44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{AD8A03D8-D567-4B38-BEFB-7CBF46DCF38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD8A03D8-D567-4B38-BEFB-7CBF46DCF38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD8A03D8-D567-4B38-BEFB-7CBF46DCF38D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67373B6-8FDD-40A3-8921-DD5073A90D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67373B6-8FDD-40A3-8921-DD5073A90D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67373B6-8FDD-40A3-8921-DD5073A90D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67373B6-8FDD-40A3-8921-DD5073A90D44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
