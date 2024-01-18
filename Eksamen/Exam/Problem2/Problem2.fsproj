@@ -8,11 +8,11 @@
 
     <ItemGroup>
       <Compile Include="Messages.fs" />
-      <Compile Include="CmdActor.fs" />
-      <Compile Include="RssSubscriptionActor.fs" />
-      <Compile Include="RssFeedActor.fs" />
-      <Compile Include="FetcherActor.fs" />
+      <Compile Include="RssFetcherActor.fs" />
       <Compile Include="Output.fs" />
+      <Compile Include="RssFeedActor.fs" />
+      <Compile Include="RssSubscriptionActor.fs" />
+      <Compile Include="CmdActor.fs" />
       <Compile Include="Program.fs" />
     </ItemGroup>
 

@@ -11,13 +11,11 @@ type ConsoleWriterMessages =
 
     
 type RssSubscriptionMessages =
-    | Start
     | Subscribe of string
     | Unsubscribe of string
     | Refresh of string
     | RefreshAll
     | GetAggregatedFeed
-    | Stop
     
 type CmdMessages =
     | CreateProcessing
@@ -26,10 +24,10 @@ type CmdMessages =
     
     
 type RssFeedMessages =
-    | CreateFetcher of string
-    | Refresh of string
-    | GetData of string
-    | Cancel
+    | Refresh 
+    | GetData
+    | PoisonPill
+  
     
     
 type FetcherMessages =
