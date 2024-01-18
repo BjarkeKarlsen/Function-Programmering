@@ -6,13 +6,27 @@ open Exam.Part2.FetcherActor
 
 
 //with mutable data
-let FeedActor name (mailbox:Actor<RssFeedMessages>) =
-    0
-    //let mutable var = []// TODO: Make list or other mutable 0¨
-    
-    // TODO: Logic outside of loop
-    //let observer = new FetcherActor(mailbox.Self, fullpath)
+let FeedActor (url: string) (mailbox:Actor<RssFeedMessages>) =
+    let mutable data = []// TODO: Make list or other mutable 0¨
+    spawn mailbox.Context "url" (FetcherActor url) |> ignore 
         
+  
+    let rec loop () =
+        actor {
+            let! msg = mailbox.Receive()   
+             
+            match msg with
+            | RssFeedMessages.Refresh ->
+                mailbox.Context.Child "url" <! FetcherMessages.Fetch 
+            | RssFeedMessages.GetData replyChannel  ->
+                replyChannel.Reply data
+            return! loop()
+         }
+    loop() 
+
+    
+        
+    
     // do observer.Start ()
     // let output status message =
     //      select "/user/output" mailbox.Context.System <! status message
@@ -24,24 +38,7 @@ let FeedActor name (mailbox:Actor<RssFeedMessages>) =
     //
     // mailbox.Self <! InitialRead (filePath, text)
     //        
-    //     
-    // let rec loop () =
-    //     actor {
-    //         let! msg = mailbox.Receive()   
-    //          
-    //         match msg with
-    //         | Refresh -> 0
-    //         | GetData -> 0
-    //                     
-    //         return! loop()
-    //      }
-    // loop() 
-    //
-    //
-    
-        
-    
-     
+    //   
     
     
     

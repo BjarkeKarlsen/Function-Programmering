@@ -1,6 +1,16 @@
 ﻿// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
 module Exam.Part2.Messages
 
+open System
+
+type Item = {
+    Title: string
+    Description: string
+    Link: string
+    Guid: string
+    PubDate: DateTime
+}
+
 type ConsoleWriterMessages =
     | Menu of string
     | ConsoleLine of string
@@ -10,7 +20,7 @@ type ConsoleWriterMessages =
 
 type RssFeedMessages =
     | Refresh
-    | GetData
+    | GetData of AsyncReplyChannel<Item list>
     
 type RssSubscriptionMessages =
     | Subscribe of string
